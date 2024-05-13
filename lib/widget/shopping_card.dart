@@ -3,9 +3,16 @@ import 'package:productsales/data/card_data.dart';
 import 'package:productsales/widget/shoping_quantity_button.dart';
 
 class ShoppingCard extends StatelessWidget {
-  const ShoppingCard({super.key, required this.index, required this.incressButton, required this.decressButton,});
-   final Function incressButton, decressButton;
-   final int index;
+
+  final Function incressButton, decressButton;
+  final int index;
+
+  const ShoppingCard({
+    super.key,
+    required this.index,
+    required this.incressButton,
+    required this.decressButton,
+  });
 
   @override
   Widget build(BuildContext context) {

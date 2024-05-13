@@ -12,13 +12,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late int totalPrice;
 
-  @override
-  void initState() {
-    totalPrice = calculateTotalPrice();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   calculateTotalPrice();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(
-                        totalPrice.toString(),
+                        '${calculateTotalPrice().toString()}\$',
                         style: const TextStyle(
                           fontFamily: 'Metropolis',
                           fontSize: 18,
@@ -92,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('Successull'),
+                          content: Text('Successfully your order'),
                         ),
                       );
                     },
@@ -125,12 +124,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   int calculateTotalPrice() {
-    totalPrice = 0;
-    for (CardData data in contents) {
-      totalPrice += data.dressPrice;
-      setState(() {});
+    int totalAmount=0;
+    for (CardData element in contents) {
+      totalAmount = totalAmount +element.dressPrice;
     }
-    return totalPrice;
+    return totalAmount;
   }
 
   _incressQuantity(int index) {
