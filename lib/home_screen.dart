@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:productsales/data/card_data.dart';
 import 'package:productsales/widget/alert_dialog.dart';
-import 'package:productsales/widget/home_screen_title.dart';
+import 'package:productsales/widget/home_screen_bottom.dart';
 import 'package:productsales/widget/shopping_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,12 +12,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-  // @override
-  // void initState() {
-  //   calculateTotalPrice();
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +29,17 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const HomeScreenTitle(),
+            const FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                'My Bag',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w900,
+                  fontFamily: 'Metropolis',
+                ),
+              ),
+            ),
             const SizedBox(
               height: 20,
             ),
@@ -52,81 +56,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        'Total amount:',
-                        style: TextStyle(
-                          fontFamily: 'Metropolis',
-                          fontSize: 14,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                    FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        '${calculateTotalPrice().toString()}\$',
-                        style: const TextStyle(
-                          fontFamily: 'Metropolis',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.width * 0.14,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Successfully your order'),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromRGBO(219, 48, 34, 1),
-                      elevation: 5,
-                      shadowColor: Colors.red,
-                      foregroundColor: Colors.white,
-                    ),
-                    child: const FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        'CHECK OUT',
-                        style: TextStyle(
-                          fontFamily: 'Metropolis',
-                          fontSize: 14,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            )
+            HomeScreenBottom(totalAmount: _getTotalAmount()),
           ],
         ),
       ),
     );
   }
 
-  int calculateTotalPrice() {
-    int totalAmount=0;
+  int _getTotalAmount() {
+      int totalAmount=0;
     for (CardData element in contents) {
-      totalAmount = totalAmount +element.dressPrice;
+      totalAmount += element.dressPrice * element.quantity;
     }
     return totalAmount;
   }
@@ -146,6 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       );
     }
+
     setState(() {});
   }
 
@@ -153,7 +94,6 @@ class _HomeScreenState extends State<HomeScreen> {
     if (contents[index].quantity > 1) {
       contents[index].quantity = contents[index].quantity - 1;
     }
-
     setState(() {});
   }
 }

@@ -3,7 +3,6 @@ import 'package:productsales/data/card_data.dart';
 import 'package:productsales/widget/shoping_quantity_button.dart';
 
 class ShoppingCard extends StatelessWidget {
-
   final Function incressButton, decressButton;
   final int index;
 
@@ -33,170 +32,188 @@ class ShoppingCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          AspectRatio(
-            aspectRatio: 16 / 16,
-            child: Container(
-              height: 104,
-              width: 104,
-              decoration:  BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage(
-                    contents[index].dressImage,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          _buildCardImage(),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    flex: 1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            contents[index].dressName,
-                            style: const TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Metropolis',
-                            ),
-                          ),
-                        ),
-                        const FittedBox(
-                          fit: BoxFit.cover,
-                          child: Icon(
-                            Icons.more_vert,
-                            color: Color.fromRGBO(201, 201, 201, 1),
-                            size: 48,
-                          ),
-                        ),
-                      ],
-                    ),
+                  _bulidCardHeader(),
+                  _buildCardDiscription(),
+                  const SizedBox(
+                    height: 10,
                   ),
-                  Expanded(
-                flex: 1,
-                child: Row(
-                  children: [
-                    const FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        'Color: ',
-                        style: TextStyle(
-                          fontFamily: 'Metropolis',
-                          fontSize: 13,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                    FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        contents[index].dressColor,
-                        style: const TextStyle(
-                          fontFamily: 'Metropolis',
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    const FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        'Size: ',
-                        style: TextStyle(
-                          fontFamily: 'Metropolis',
-                          fontSize: 13,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                    FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        contents[index].dressSize,
-                        style: const TextStyle(
-                          fontFamily: 'Metropolis',
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-                  const SizedBox(height: 10,),
-                  Expanded(
-                    flex: 2,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            FittedBox(
-                              fit: BoxFit.cover,
-                              child: ShopingQuntityButton(
-                                onPressed: decressButton,
-                                icon: Icons.remove,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Text(
-                                contents[index].quantity.toString(),
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Metropolis',
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            FittedBox(
-                              fit: BoxFit.cover,
-                              child: ShopingQuntityButton(
-                                onPressed: incressButton,
-                                icon: Icons.add,
-                              ),
-                            ),
-                          ],
-                        ),
-                         Row(
-                          children: [
-                            FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Text(
-                                "${contents[index].dressPrice*contents[index].quantity}\$",
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Metropolis',
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                  _buildCardButton(),
                 ],
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCardImage() {
+    return AspectRatio(
+      aspectRatio: 16 / 16,
+      child: Container(
+        height: 104,
+        width: 104,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage(
+              contents[index].dressImage,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _bulidCardHeader() {
+    return Expanded(
+      flex: 1,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              contents[index].dressName,
+              style: const TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Metropolis',
+              ),
+            ),
+          ),
+          const FittedBox(
+            fit: BoxFit.cover,
+            child: Icon(
+              Icons.more_vert,
+              color: Color.fromRGBO(201, 201, 201, 1),
+              size: 48,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCardDiscription() {
+    return Expanded(
+      flex: 1,
+      child: Row(
+        children: [
+          const FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              'Color: ',
+              style: TextStyle(
+                fontFamily: 'Metropolis',
+                fontSize: 13,
+                color: Colors.grey,
+              ),
+            ),
+          ),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              contents[index].dressColor,
+              style: const TextStyle(
+                fontFamily: 'Metropolis',
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          const FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              'Size: ',
+              style: TextStyle(
+                fontFamily: 'Metropolis',
+                fontSize: 13,
+                color: Colors.grey,
+              ),
+            ),
+          ),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              contents[index].dressSize,
+              style: const TextStyle(
+                fontFamily: 'Metropolis',
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCardButton() {
+    return Expanded(
+      flex: 2,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              FittedBox(
+                fit: BoxFit.cover,
+                child: ShopingQuntityButton(
+                  onPressed: decressButton,
+                  icon: Icons.remove,
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  contents[index].quantity.toString(),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Metropolis',
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              FittedBox(
+                fit: BoxFit.cover,
+                child: ShopingQuntityButton(
+                  onPressed: incressButton,
+                  icon: Icons.add,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  "${contents[index].dressPrice * contents[index].quantity}\$",
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: 'Metropolis',
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

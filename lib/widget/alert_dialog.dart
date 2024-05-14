@@ -3,7 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class HomeAlertDialog extends StatelessWidget {
   const HomeAlertDialog({super.key, required this.contentText});
-   final String contentText;
+
+  final String contentText;
 
   @override
   Widget build(BuildContext context) {
